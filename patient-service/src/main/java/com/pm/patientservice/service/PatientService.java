@@ -9,7 +9,9 @@ import com.pm.patientservice.model.Patient;
 import com.pm.patientservice.repository.PatientRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -38,12 +40,19 @@ public class PatientService {
         Patient patient = patientRepository.findById(id).orElseThrow(() -> new PatientNotFoundException("Patient not " +
                 "found with Id: " + id));
 
-        if (patientRepository.existsByEmail(patientRequestDTO.getEmail())) {
+        Optional<Patient> patient1 = Optional.ofNullable(patientRepository.findByEmail(patientRequestDTO.getEmail()));
+
+        if (patientRepository.existsByEmail(patientRequestDTO.getEmail()) && patient1.isPresent() && !patient1.get().getId().equals(id)) {
             throw new EmailAlreadyExistsException("A patient with this email " + patientRequestDTO.getEmail() + " " +
                     "already exists");
         }
 
-        Patient updatedPatient = patientRepository.save(PatientMapper.toModel(patientRequestDTO));
-        return PatientMapper.toDTO(updatedPatient);
+        patient.setName(patientRequestDTO.getName());
+        patient.setEmail(patientRequestDTO.getEmail());
+        patient.setAddress(patient.getAddress());
+        patient.setDateOfBirth(LocalDate.parse(patientRequestDTO.getDateOfBirth()));
+
+        patientRepository.save(patient);
+        return PatientMapper.toDTO(patient);
     }
 }
