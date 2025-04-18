@@ -1,4 +1,4 @@
-### GET api docs
+### GET patient api docs
 GET http://localhost:4004/api-docs/patients
 
 ###

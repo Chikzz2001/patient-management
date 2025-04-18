@@ -1,0 +1,4 @@
+### GET auth api docs
+GET http://localhost:4004/api-docs/auth
+
+###
