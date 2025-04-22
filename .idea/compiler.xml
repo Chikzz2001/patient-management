@@ -13,9 +13,13 @@
         <module name="api-gateway" />
         <module name="patient-service" />
         <module name="integration-tests" />
+        <module name="discovery-service" />
         <module name="billing-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="discovery-server" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -23,6 +27,7 @@
       <module name="api-gateway" options="-parameters" />
       <module name="auth-service" options="-parameters" />
       <module name="billing-service" options="-parameters" />
+      <module name="discovery-service" options="-parameters" />
       <module name="patient-service" options="-parameters" />
     </option>
   </component>
