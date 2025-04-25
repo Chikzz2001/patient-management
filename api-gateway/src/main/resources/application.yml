@@ -17,8 +17,15 @@ spring:
           filters:
             - StripPrefix=1
 
+        - id: patient-service-health-route
+          uri: http://patient-service:4006
+          predicates:
+            - Path=/api/actuator/health
+          filters:
+            - StripPrefix=1
+
         - id: patient-service-route
-          uri: http://patient-service:4000
+          uri: http://patient-service:4006
           predicates:
             - Path=/api/patients/**
           filters:
